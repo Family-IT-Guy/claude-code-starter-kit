@@ -1,0 +1,22 @@
+FIRST_PRINCIPLES_METHOD: |
+  <methodology id="first-principles">
+    <definition>Start with fundamentals: system architecture -> sub-components -> basic components</definition>
+    <process>
+      <step>Always use the scientific method for analysis</step>
+      <step>Build understanding progressively from basic truths upward</step>
+      <step>Identify and question all assumptions at each level</step>
+      <step>Validate each assumption with objective evidence</step>
+      <step>Choose simplest solution that meets requirements (KISS)</step>
+      <step>Avoid future-proofing unless explicitly required (YAGNI)</step>
+      <step>Trace problems to lowest level system boundaries</step>
+      <step>Avoid reasoning by analogy without validation</step>
+    </process>
+    <application>Apply to analysis, assessment, troubleshooting, debugging, diagnosis, investigation, problem-solving, RCA, issue resolution, error investigation, evaluation, review, audit, inspection, examination, comparison, recommendation, feasibility study, risk assessment</application>
+  </methodology>
+
+EVIDENCE_BASED_STANDARDS: |
+  <methodology id="evidence-based">
+    <evidence_requirements>testing confirms|metrics show|benchmarks prove|data indicates|documentation states</evidence_requirements>
+    <citations>Official documentation required | Version compatibility verified | Sources documented</citations>
+    <research_standards>Context7 for external libraries | Web search for official sources | Evidence before implementation</research_standards>
+  </methodology>

@@ -1,0 +1,40 @@
+SESSION_PROTOCOL: |
+  <session_management>
+    <first_action>Check/create SESSION_HANDOFF.xml in project root</first_action>
+    <during_session>Update XML with progress, assumptions, and key decisions</during_session>
+    <mode_switches>Document context changes and reasoning in SESSION_HANDOFF.xml</mode_switches>
+    <end_session>Update next priorities and validate XML structure</end_session>
+    <guide_maintenance>Update relevant guides when insights become outdated</guide_maintenance>
+    <assumption_management>Protocol for managing technical assumptions and confirmations</assumption_management>
+    <project_memory>Maintain SESSION_HANDOFF.xml as project memory with optimized structure</project_memory>
+  </session_management>
+
+HYPOTHESIS_PROTOCOL: |
+  <hypothesis_tracking>
+    <purpose>Prevent re-investigation loops across sessions by tracking tested hypotheses</purpose>
+
+    <before_testing>
+      1. Check <tested_hypotheses> section in SESSION_HANDOFF.xml
+      2. If hypothesis status is CLOSED - DO NOT RETEST without explicit user approval
+      3. If proposing to retest, must state what is DIFFERENT from previous test configuration
+    </before_testing>
+
+    <after_testing>
+      1. Immediately update <tested_hypotheses> with result
+      2. Include: date, sessions tested, configuration used, definitive result
+      3. Mark as CLOSED if conclusively proven or disproven
+      4. Mark as INCONCLUSIVE only if test was invalid (not if result was unclear)
+    </after_testing>
+
+    <status_definitions>
+      CLOSED: Conclusively tested, do not revisit without new invalidating evidence
+      INCONCLUSIVE: Test was invalid or incomplete, may revisit with proper setup
+      SUPERSEDED: Replaced by a different hypothesis
+      OPEN: Not yet tested or actively being investigated
+    </status_definitions>
+
+    <enforcement>
+      CLOSED means CLOSED. Context resets do not justify re-testing.
+      If you find yourself proposing a test that "feels familiar", check the log first.
+    </enforcement>
+  </hypothesis_tracking>
