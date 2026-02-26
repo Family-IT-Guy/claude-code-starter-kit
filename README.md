@@ -1,202 +1,180 @@
 # Claude Code Starter Kit
 
-A session recovery and self-improvement system for Claude Code CLI. Makes Claude remember what it learned, recover cleanly between sessions, and get better over time.
+A session recovery and self-improvement system for Claude Code CLI.
 
-## What This Solves
+## For Claude Code: Installation Instructions
 
-Claude Code starts every session with amnesia. It doesn't remember:
-- How you like to work
-- What mistakes it made last time
-- What you were working on yesterday
-- What hypotheses it already tested and ruled out
+When a user asks you to install or set up this starter kit, follow this process. Do not skip steps or batch questions. Work through this one decision at a time with the user.
 
-This kit fixes that with a set of configuration files that Claude reads at the start of every session.
+### Step 0: Fetch the Kit
 
-## What's Included
-
-```
-claude-code-starter-kit/
-|
-|-- CLAUDE.md                        # Master rules loaded every session
-|-- preferences.yml                  # Communication style, work standards
-|-- lessons-learned.yml              # Behavioral improvement queue
-|-- statusline-script.sh             # Context window % in status bar
-|
-|-- core/
-|   |-- methodologies.yml            # First principles + evidence-based standards
-|   |-- session-management.yml       # Hypothesis tracking protocol
-|
-|-- workflows/
-|   |-- session-recovery.md          # End-of-session / start-of-session workflow
-|   |-- gather-context.md            # Systematic codebase exploration
-|   |-- git-workflow.md              # Commit conventions, branching, safety
-|
-|-- commands/
-|   |-- session-start.md             # /session-start slash command
-|   |-- session-end.md               # /session-end slash command
+Clone the repo to a temporary location:
+```bash
+git clone https://github.com/Family-IT-Guy/claude-code-starter-kit.git /tmp/claude-code-starter-kit
 ```
 
-## Installation
+Read every file in the cloned repo to understand what's available.
 
-Clone this repo, then let Claude Code install the files for you. Start a Claude Code session in the cloned directory and paste one of these prompts:
+### Step 1: Audit the User's Existing Setup
 
-**If you don't have any existing ~/.claude/ configuration:**
-```
-Read all the files in this repo. Copy them into ~/.claude/ preserving the
-directory structure (core/, workflows/, commands/ subdirectories). Make
-statusline-script.sh executable.
-```
+Before proposing any changes, understand what the user already has. Read these locations if they exist:
+- `~/.claude/CLAUDE.md`
+- `~/.claude/settings.json`
+- `~/.claude/commands/` (list all files)
+- `~/.claude/workflows/` (list all files)
+- `~/.claude/core/` (list all files)
+- Any other `.yml`, `.md`, or `.sh` files in `~/.claude/`
 
-**If you already have a ~/.claude/CLAUDE.md and want to merge:**
-```
-Read all the files in this repo and read my existing ~/.claude/CLAUDE.md.
-Merge the rules from this kit's CLAUDE.md into mine without duplicating
-anything. Then copy the remaining files (preferences.yml, lessons-learned.yml,
-statusline-script.sh, core/, workflows/, commands/) into ~/.claude/, skipping
-any files I already have. Make statusline-script.sh executable.
-```
+Use the sequential thinking tool to analyze the gap between their current setup and what this kit provides. Categorize each component of the kit as:
+- **New** -- user has nothing equivalent
+- **Overlap** -- user has something similar that would need merging
+- **Conflict** -- user has something that contradicts a kit component
 
-After the files are in place, edit `~/.claude/preferences.yml` to set your own name in the greeting/signoff sections.
+### Step 2: Walk Through the System
 
-## Post-Install Setup
+Explain to the user what this kit does, in plain language:
 
-### 1. Disable auto-compact
+> This is a system that gives me (Claude) persistent memory across sessions and a way to learn from my mistakes over time. It has three main pieces:
+>
+> 1. **Session recovery** -- When a session ends, I write a recovery guide and update a handoff file. When the next session starts, I read those files and pick up where I left off. You never have to re-explain context.
+>
+> 2. **Self-improvement loop** -- When you correct me, I capture it as a lesson. Next session, I surface it and ask if you want to make it a permanent rule. Over time, your CLAUDE.md accumulates rules specific to how you work.
+>
+> 3. **Thinking discipline** -- Rules that force me to reason from first principles, cite evidence, track hypotheses I've already tested (so I don't go in circles), and present both sides before proposing changes.
 
-This is the single most important configuration change. Run this in a terminal:
+### Step 3: Brainstorm with the User
 
+Go through each component of the kit **one at a time**. For each, explain what it does, how it compares to anything they already have, and ask whether they want it. Use the sequential thinking tool to reason through trade-offs before presenting each question.
+
+Work through them in this order:
+
+**Foundation (start here):**
+1. `CLAUDE.md` -- Master rules. Does the user already have one? What rules overlap, what's new?
+2. `preferences.yml` -- Communication style and work standards. Walk through the voice rules, email checklist, and self-improvement section. Ask what resonates and what doesn't match how they work.
+3. `lessons-learned.yml` -- The improvement queue. This is just a template file. Explain the lifecycle: pending -> accepted (codified) / rejected (removed).
+
+**Session recovery:**
+4. `workflows/session-recovery.md` -- The core workflow. Explain the session-end and session-start flows. This is the highest-value piece.
+5. `commands/session-start.md` and `commands/session-end.md` -- Slash command triggers for the workflow.
+6. `core/session-management.yml` -- Hypothesis tracking. Explain the CLOSED-means-CLOSED rule and why it prevents wasted debugging effort.
+7. `statusline-script.sh` -- Context window % display. Explain that this works with manual compaction (auto-compact should be disabled).
+
+**Thinking discipline:**
+8. `core/methodologies.yml` -- First principles and evidence-based standards.
+9. `workflows/gather-context.md` -- Systematic codebase exploration.
+10. `workflows/git-workflow.md` -- Commit conventions and safety protocols.
+
+For each component, ask: **"Do you want this as-is, want to adapt it, or skip it?"**
+
+Do not present all components at once. One question at a time.
+
+### Step 4: Build the Plan
+
+After working through all components, summarize what the user chose:
+- Which files to install as-is
+- Which files to merge with existing config
+- Which files to skip
+- What customizations to make (names in signoffs, any rules to adjust)
+
+Present the complete plan and get explicit approval before making any changes.
+
+### Step 5: Install
+
+For each approved file:
+- **New files:** Copy from `/tmp/claude-code-starter-kit/` to `~/.claude/`, preserving directory structure
+- **Merges:** Read both the kit version and the user's existing file, merge without duplicating rules, and present the merged result for approval before writing
+- **statusline-script.sh:** Make executable after copying
+
+### Step 6: Configure Claude Code Settings
+
+After files are in place, apply these settings (explain each one before running it):
+
+**Disable auto-compact:**
 ```bash
 claude config set --global autoCompact false
 ```
+Explain: Auto-compact compresses conversation without running the session-end workflow. That means no recovery guide, no lessons captured, and the next session starts cold. With auto-compact off, the user controls when to end a session. The workflow is designed to be run at any context window %. It builds the recovery guide first (the most critical artifact), then handles lessons and handoff. After `/session-end` completes, the user runs `/compact` manually, then starts a new session with `/session-start` which reads the recovery guide automatically.
 
-**Why:** Auto-compact triggers when Claude decides it's running low on context. The problem is that it compresses your conversation *without* running the session-end workflow first, which means:
-- No recovery guide gets created
-- No lessons get captured
-- No SESSION_HANDOFF.xml gets updated
-- The next session starts cold
-
-By disabling auto-compact, you stay in control. You watch the context %, run `/session-end` when you're ready, and then manually compact. The next session picks up cleanly from the recovery guide.
-
-### 2. Enable the status line
-
-The status line shows your git branch, context window usage %, and model name. Run this in a terminal:
-
+**Enable the status line:**
 ```bash
 claude config set --global statusline '~/.claude/statusline-script.sh'
 ```
+Explain: Shows git branch, context window usage %, and model name. The % tells the user when to start wrapping up. Requires `jq` (`brew install jq` on macOS).
 
-Requires `jq` installed (`brew install jq` on macOS).
+### Step 7: Install Plugins
 
-### 3. Install plugins
+Walk through each recommended plugin one at a time. Explain what it does and ask if the user wants it.
 
-These can be installed from a terminal or from within a Claude Code session.
-
-**From a terminal:**
-```bash
-claude plugin install claude-mem@thedotmack
-claude plugin install superpowers@superpowers-marketplace
-claude plugin install context7@claude-plugins-official
-```
-
-**From within a Claude Code session:**
+**claude-mem** (cross-session memory):
+The session-recovery workflow integrates with this plugin to save lessons and search past work across sessions. Structured observation-based memory with a 3-layer search workflow (search -> timeline -> get_observations).
 ```
 /plugin install claude-mem@thedotmack
+```
+
+**superpowers** (development skills):
+Brainstorming, systematic debugging, TDD, planning, and code review skills. Adds structured workflows for common development tasks.
+```
 /plugin install superpowers@superpowers-marketplace
+```
+
+**context7** (library docs):
+Fast lookup for library documentation and code examples. Useful when working with external dependencies.
+```
 /plugin install context7@claude-plugins-official
 ```
 
-| Plugin | What it does |
-|--------|-------------|
-| claude-mem | Cross-session structured memory. The session-recovery workflow saves lessons here and searches past work. |
-| superpowers | Brainstorming, debugging, TDD, and planning skills. |
-| context7 | Library documentation lookup. |
+**sequential-thinking** (reasoning tool):
+Structured step-by-step reasoning for analysis, debugging, and planning. This kit's workflows reference it extensively. The MCP server is available at: https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking
+```json
+{
+  "mcpServers": {
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    }
+  }
+}
+```
+Add this to the user's `~/.claude/settings.json` under `mcpServers` if they approve.
 
-## How to Use It
+### Step 8: Clean Up
+
+```bash
+rm -rf /tmp/claude-code-starter-kit
+```
+
+Tell the user the system is active. Their next step is to start working normally. When they're ready to end a session, type `/session-end`. When starting the next session, type `/session-start`.
+
+---
+
+## For Humans: What This System Does
+
+### The Problem
+Claude Code starts every session with amnesia. It doesn't know how you like to work, what mistakes it made last time, or what you were working on yesterday.
+
+### The Solution
+A set of configuration files in `~/.claude/` that Claude reads at session start. Three main capabilities:
+
+**Session recovery.** `/session-end` creates a recovery guide and handoff file. `/session-start` reads them and picks up where you left off. You never re-explain context.
+
+**Self-improvement.** When you correct Claude, it captures the correction as a pending lesson. Next session, it asks: accept (make it a permanent rule), reject, or defer. Over time, your CLAUDE.md accumulates rules specific to how you work. Every correction becomes permanent.
+
+**Thinking discipline.** Rules that force first-principles reasoning, evidence citation, hypothesis tracking (no re-testing what's already been ruled out), and presenting both sides before proposing changes.
 
 ### Context Window Management
 
-Your status line now shows something like: `main | 42% | Opus 4.6`
+After installing, your status line shows context window usage: `main | 42% | Opus 4.6`
 
-That `42%` is your context window usage. When you're ready to wrap up, run `/session-end`. The workflow is designed to handle this at any context level. It builds the recovery guide first (the most valuable artifact), then captures lessons and updates SESSION_HANDOFF.xml. If context runs out partway through, the recovery guide is already written.
+When you're ready to wrap up, run `/session-end`. The workflow handles prioritization at any context level -- it builds the recovery guide first, then captures lessons and updates the handoff file. After it completes, run `/compact` manually. Start your next session with `/session-start`, which reads everything automatically.
 
-The recommended target is **80% or below** -- this gives the session-end workflow plenty of room to complete all its steps. But even at 90%+, just run `/session-end` and let it do what it can. The workflow prioritizes the right things.
+Recommended to disable auto-compact so the session-end workflow runs before any compaction happens.
 
-After `/session-end` completes (or partially completes), run `/compact` manually. The next session uses `/session-start`, which reads the recovery guide and the compact summary. No additional context needs to be provided.
+### Getting Started
 
-### Starting a Session
-
-Type `/session-start` at the beginning of each session. Claude will:
-
-1. Re-read CLAUDE.md and all @included files
-2. Read SESSION_HANDOFF.xml to understand where you left off
-3. Check for relevant guides in .claude/guides/
-4. Validate project state (git status, etc.)
-5. Check for CLOSED hypotheses (things already tested and ruled out)
-6. Surface any pending lessons from last session for your review
-
-### Ending a Session
-
-Type `/session-end` when you're ready to wrap up. Claude will:
-
-1. Create a recovery guide in `.claude/guides/` with everything the next session needs
-2. Capture any lessons learned (mistakes, corrections, insights)
-3. Update SESSION_HANDOFF.xml with current status and next priorities
-4. Commit work in progress
-
-After the workflow completes, run `/compact` to compress the conversation. Start a fresh session with `/session-start` whenever you're ready to continue.
-
-### The Self-Improvement Loop
-
-This is how Claude gets better over time:
-
-1. **During work:** Claude makes a mistake or you correct it
-2. **Session end:** The correction gets captured in `lessons-learned.yml` as a pending lesson
-3. **Next session start:** Claude surfaces the pending lesson and asks you:
-   - **Accept** -- The fix gets written into CLAUDE.md, preferences.yml, or a workflow. The lesson is removed from the queue.
-   - **Reject** -- You explain why. The lesson is removed.
-   - **Defer** -- It stays pending for next session.
-4. **Future sessions:** The fix is now part of Claude's rules. It won't make that mistake again.
-
-Over time, your CLAUDE.md accumulates hard-won rules specific to how you work. Every correction becomes permanent.
-
-### The Hypothesis Protocol
-
-When debugging across sessions, Claude tracks what it has tested:
-
-- **OPEN** -- Not yet tested
-- **CLOSED** -- Tested conclusively. Do not revisit.
-- **INCONCLUSIVE** -- Test was invalid. May revisit with better setup.
-- **SUPERSEDED** -- Replaced by a different theory.
-
-The critical rule: **CLOSED means CLOSED.** A new session doesn't get to re-test a theory just because it seems plausible in isolation. This prevents the most common multi-session debugging failure: going in circles.
-
-### SESSION_HANDOFF.xml
-
-This file lives in your project root and tracks dynamic state:
-- Current phase and progress
-- Next priorities
-- Tested hypotheses
-- Active assumptions
-
-CLAUDE.md is for rules (static). SESSION_HANDOFF.xml is for state (dynamic). Don't duplicate one in the other.
-
-## The File Operation Protocol
-
-Every time Claude proposes a change, it must present:
+Start a Claude Code session and say:
 
 ```
-PLAN: [what it wants to do]
-IMPACT: [what this affects]
-WHY YOU SHOULD APPROVE: [reasons for]
-WHY YOU SHOULD NOT APPROVE: [reasons against]
-SUGGESTED NEXT STEPS: [objective assessment]
+Set up the Claude Code Starter Kit from https://github.com/Family-IT-Guy/claude-code-starter-kit -- read the README for instructions.
 ```
 
-This forces Claude to think through changes before making them and gives you both sides before approving.
-
-## Philosophy
-
-- **Corrections are data.** Every time you fix Claude, that's a signal. Capture it or it repeats.
-- **Rules are earned.** Don't add rules speculatively. Add them when something goes wrong. Each rule in CLAUDE.md should trace back to a real incident.
-- **Static vs dynamic.** Rules go in CLAUDE.md (loaded every session). Status goes in SESSION_HANDOFF.xml (changes every session). Mixing them creates staleness.
-- **Evidence over analogy.** Claude defaults to pattern-matching. The methodologies.yml forces it to reason from first principles and cite evidence.
-- **Manual over automatic for session management.** Auto-compact loses context silently. Manual session boundaries with `/session-end` preserve everything.
+Claude will walk you through the setup one step at a time.
