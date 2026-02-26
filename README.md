@@ -38,7 +38,7 @@ Claude will clone the repo, audit your existing setup, and walk you through each
 
 ```
 CLAUDE.md                        Master rules loaded every session
-preferences.yml                  Communication style, work standards, self-improvement
+preferences.yml                  Work standards, self-improvement (skeleton)
 lessons-learned.yml              Behavioral improvement queue (starts empty)
 statusline-script.sh             Context window % in status bar
 
@@ -119,7 +119,7 @@ Work through them in this order:
 
 1. `CLAUDE.md` -- Master rules file, loaded every session. Contains the critical rules (confirm before changes, read before editing, no fake data, plan before executing), the File Operation Protocol (forces Claude to present pros and cons before any change), and core principles (first principles thinking, KISS/YAGNI, pattern vigilance). If the user already has a CLAUDE.md, walk through each rule block and ask what to keep, merge, or skip. This file's rules apply to everything Claude does, so it has the highest behavioral impact of anything in the kit.
 
-2. `preferences.yml` -- Communication style rules. The voice section has 15+ banned patterns (em dashes, corporate speak, flattery, hedging, etc.) and anti-pattern examples showing wrong vs. right. The email pre-send checklist runs 11 checks before presenting any draft. The self-improvement section tells Claude to propose preference updates when new ones are discovered. Walk through the voice rules -- these are opinionated and the user should only adopt ones that match how they actually communicate. Some users want emoji, some want "Best regards" -- those are fine, just remove the corresponding banned pattern.
+2. `preferences.yml` -- Work standards and self-improvement settings. This is a skeleton file with structural sections only: work style (confirm before changes, plan before execute, no fake data), session management, file operation protocol reference, and the self-improvement cycle. It's intentionally minimal -- users build up their own voice rules, communication preferences, and domain-specific settings over time through the lessons-learned loop. Explain that this file grows organically: when the user corrects Claude's communication style or workflow, those corrections become lessons, and accepted lessons get codified here.
 
 3. `lessons-learned.yml` -- An empty template file with documentation. No token cost (empty array). The value is in the structure and lifecycle documentation in the comments. There's no reason not to install this. Explain the lifecycle: corrections get captured here as pending -> user accepts (fix gets codified into CLAUDE.md/preferences/workflows, entry removed) or rejects (entry removed) or defers (stays for next session).
 
