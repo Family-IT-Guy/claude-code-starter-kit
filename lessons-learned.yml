@@ -1,0 +1,58 @@
+# Lessons Learned - Behavioral Improvement Tracker
+#
+# Definition: A lesson is a pattern that produces suboptimal outputs or errors
+# that can be addressed to prevent errors or produce more optimal outcomes
+# in the future.
+#
+# Captured by: session-end workflow (Step 1.5)
+# Surfaced by: session-start workflow (Step 4)
+#
+# Scope includes: behavioral mistakes, workflow inefficiencies, tool misuse,
+# communication failures, knowledge gaps, assumption failures - anything
+# where a pattern led to a suboptimal result and a systemic change could
+# prevent recurrence.
+#
+# Entry format:
+#   - id:            Sequential integer
+#     date:          Date captured (YYYY-MM-DD)
+#     project:       Project where the pattern was observed
+#     status:        pending | accepted | rejected | archived
+#
+#     pattern:       What happened - the observable behavior or sequence of
+#                    events. Enough narrative context for a fresh session to
+#                    fully understand the situation.
+#
+#     root_cause:    Why it happened - detailed analysis of the underlying
+#                    cause. Not surface-level ("forgot the rule") but
+#                    structural ("the rule has no enforcement mechanism").
+#
+#     impact:        What went wrong or was suboptimal - concrete consequences
+#                    including wasted effort, broken output, user intervention.
+#
+#     example:       Specific incident from the session that illustrates the
+#                    pattern. Include enough detail to serve as a reference.
+#
+#     proposed_fix:  What should change systemically - a durable change to
+#                    CLAUDE.md rules, skills, workflows, or process that would
+#                    prevent recurrence.
+#
+#     resolution:    (null when pending) Where the fix was codified when
+#                    accepted, or rationale when rejected.
+#
+# Lifecycle:
+#   pending   - Captured but not yet discussed with user
+#   accepted  - User approved; fix has been codified (resolution says where)
+#   rejected  - User decided against; resolution explains why
+#   archived  - Previously accepted, kept for historical reference
+#
+# No artificial caps on number of entries or verbosity. Thoroughness of
+# capture is more valuable than brevity - the next session needs full
+# context to act on these.
+#
+# Cleanup policy: Accepted and rejected entries are removed once codified
+# or decided. The fixes live in their target docs (CLAUDE.md, skills,
+# workflows). Only pending entries remain in this file.
+#
+# Next ID: 1
+
+lessons: []
